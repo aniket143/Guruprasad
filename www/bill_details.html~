@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="js/jquery.mobile-1.4.5.js"></script>  
+ <script src="jss/jquery-1.4.4.min.js"></script>  
+<script type="text/javascript" charset="utf-8">
+function get()
+{
+var queryString = new Array();
+
+          if (window.location.search.split('?').length > 1) {
+                var params = window.location.search.split('?')[1].split('&');
+                for (var i = 0; i < params.length; i++) {
+                    var key = params[i].split('=')[0];
+                    var value = decodeURIComponent(params[i].split('=')[1]);
+                    queryString[key] = value;
+                }
+            }
+//alert(queryString[key]);
+var myArray=queryString[key].split('|');
+     document.getElementById('member1').value =myArray[0];
+     document.getElementById('sms').value =myArray[1];
+          document.getElementById('t1').value =myArray[2];
+     }
+     
+ function checkid()
+   {
+ var sms=document.getElementById('sms').value;
+ var code=document.getElementById('code').value;
+ if(sms!=code)
+ {
+alert('Please Enter Password Properly!!!'); 
+document.getElementById('code').value="";
+ }     else
+ {
+ //alert('Transaction Code is Correct!!!'); 
+ //window.location.href="report1.html";
+ }
+    }
+  
+  $(function() {
+      $("#callAjax").click(function() {
+            var billno = $.trim($("#billno").val());
+            var member1 = $.trim($("#member1").val());
+            var amount = $.trim($("#amount").val());
+            var date = $.trim($("#date").val());
+            var payment = $.trim($("#payment").val());
+            var com = $.trim($("#com").val());
+            var sms= $.trim($("#sms").val());
+            var t1= $.trim($("#t1").val());
+           // alert(billno);
+           /* if(theName=="")
+            {
+           alert("Please Enter Member Id");       
+            }
+            else{*/
+           //if(theName.length > 0)
+           // {
+            $.ajax({
+    // url: "demo3.php",
+        url: "http://shopnearn.co.in/mobileapp/shop_insert_mob.php",
+           type     : 'POST',
+              data: ({billno: billno,amount:amount,payment:payment,com:com,member1:member1,t1:t1,sms:sms}),
+                  cache: false,
+                  dataType: "text",
+                  success: onSuccess
+                });//}
+                });
+     $("#resultLog").ajaxError(function(event, request, settings, exception) {
+          $("#resultLog").html("Error Calling: " + settings.url + "<br />HTTP Code: " + request.status);});
+function onSuccess(data)
+        {
+       // alert(data);
+ $("#resultLog").html("Result: " + data);
+            		window.location.href="report1.html";
+
+        }
+  });
+    
+function checkdate()
+{
+ var date=document.getElementById('date').value;
+ var payment=document.getElementById('payment').value;
+ var today=new Date();
+ var dd=today.getDate();
+ var mm=today.getMonth()+1;
+ mm1='0'+mm;
+ dd1='0'+dd;
+ var yy=today.getFullYear();
+ var today1=yy+'-'+mm1+'-'+dd1;
+ if(date==today1 && payment==today1){}
+else
+{
+alert("Please Select Today's date");
+document.getElementById('date').value="";
+document.getElementById('payment').value="";
+}
+}
+</script>
+        </head>
+<body>
+ <div data-role="page" id="pagetwo">
+<div data-role="panel" id="overlayPanel1" data-display="overlay"> 
+    <ul data-role="listview">
+   <li data-icon="camera"><a href="#qrcode1" style= font-size:0.9em;>QR Code</a></li>
+  <li data-icon="user"><a href="#memberid1" style= font-size:0.9em;>Member Id</a></li>
+  <li data-icon="phone"><a href="#mobno1" style= font-size:0.9em;>Mobile No</a></li>
+   <li data-icon="user"><a href="#placeholder2" style= font-size:0.9em;>About Us</a></li>
+  <li data-icon="phone"><a href="#placeholder3" style= font-size:0.9em;>Contact Us</a></li>
+  <li data-icon="gear"><a href="login.html" style= font-size:0.9em;>Logout</a></li>
+</ul>  
+</div> 
+<div data-role="header">
+ 
+   <div data-role="header" data-theme="b">
+         <h3 style="text-align: center" >Welcome To ShopNearn </h3>
+        
+           <a role="button" data-role="button" data-mini="true" href="#overlayPanel1" class="ui-btn-left ui-btn-corner-all ui-btn  ui-icon-bars ui-btn-icon-notext ui-shadow" title="Home" data-form="ui-icon" data-theme="a" > 
+          </a>         
+         <a href="home.html" class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Home</a>
+            </div>
+  </div>
+    <div data-role="main" class="ui-content"> 
+<!-- <form name="contact_form" class="contact_form" method="post" action="http://shopnearn.co.in/mobileapp/shop_insert_mob.php"> -->
+<form name="contact_form" class="contact_form" method="post">
+<input type="hidden" name="member1" id="member1"  required>
+ <input type="text" name="sms" id="sms"  required>
+      <label for="billno">Bill No.:</label>
+      <input type="text" name="billno" id="billno"  onclick="get();" required>
+      <label for="amount">Bill Amount:</label>
+      <input type="text" name="amount" id="amount" required>
+      <label for="date">Date & Time:</label>
+      <input type="date" name="date" id="date"  required>
+      <label for="payment">Payment Receive Entry:</label>
+      <input type="date" name="payment" id="payment"  required>
+       <label for="com">Commission:</label>
+      <input type="text" name="com" id="com" maxlength="2" onclick="checkdate();" required>
+      <label for="code">Enter Password:</label>
+      <input type="password" name="code" id="code" required>
+      <input type="hidden" name="t1" id="t1" required>
+       <label for="trans">Confirm Transaction Details</label>
+      <input type="checkbox" name="trans" id="trans" required>
+     <input type="submit"  value="Submit" id="callAjax" name="submit" onclick="checkid()" data-transition="slide" data-theme="b">
+    </form>
+
+
+
+</div>
+<div id="resultLog"></div> 
+</div> 
+</body>
+</html>

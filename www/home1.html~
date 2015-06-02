@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="js/jquery.mobile-1.4.5.js"></script>  
+ <script src="jss/jquery-1.4.4.min.js"></script>  
+<script type="text/javascript" charset="utf-8"> 
+  
+$(function() {
+      $("#callAjax").click(function() {
+            var theName = $.trim($("#theName").val());
+            if(theName=="")
+            {
+           alert("Please Enter Member Id");       
+            }
+            else{
+           if(theName.length > 0)
+            {$.ajax({
+        //url: "demo3.php",
+        url: "http://shopnearn.co.in/mobileapp/demo3.php",
+           type     : 'GET',
+              data: ({name: theName}),
+                  cache: false,
+                  dataType: "text",
+                  success: onSuccess
+                });}}});
+     $("#resultLog").ajaxError(function(event, request, settings, exception) {
+          $("#resultLog").html("Error Calling: " + settings.url + "<br />HTTP Code: " + request.status);});
+function onSuccess(data)
+        {
+        var queryString = new Array();
+
+          if (window.location.search.split('?').length > 1) {
+                var params = window.location.search.split('?')[1].split('&');
+                for (var i = 0; i < params.length; i++) {
+                    var key = params[i].split('=')[0];
+                    var value = decodeURIComponent(params[i].split('=')[1]);
+                    queryString[key] = value;
+                }
+            }
+
+
+ $("#resultLog").html("Result: " + data);
+            	 			window.location.href="memberid22.html?member="+encodeURIComponent(data)+"|"+myArray[0];
+        }
+  });
+ 
+  $(function() {
+  
+
+      $("#callAjax1").click(function() {
+      
+            var theName1 = $.trim($("#theName1").val());
+            if(theName1=="")
+            {
+           alert("Please Enter Mobile Number");       
+            }
+            else{
+          if(theName1.length > 0)
+            { $.ajax({
+      // url: "mobno.php",
+      url: "http://shopnearn.co.in/mobileapp/mobno.php",
+           type     : 'GET',
+             data: ({name: theName1}),
+                  cache: false,
+                  dataType: "text",
+                  success: onSuccess
+                });}}});
+    $("#resultLog").ajaxError(function(event, request, settings, exception) {
+          $("#resultLog").html("Error Calling: " + settings.url + "<br />HTTP Code: " + request.status);
+        });
+function onSuccess(data)
+        {
+        var queryString = new Array();
+
+          if (window.location.search.split('?').length > 1) {
+                var params = window.location.search.split('?')[1].split('&');
+                for (var i = 0; i < params.length; i++) {
+                    var key = params[i].split('=')[0];
+                    var value = decodeURIComponent(params[i].split('=')[1]);
+                    queryString[key] = value;
+                }
+            }
+
+var myArray=queryString[key].split('|');
+//alert(myArray);
+            $("#resultLog").html("Result: " + data);
+
+            	 			window.location.href="mobno11.html?member="+encodeURIComponent(data)+"|"+myArray[0];
+        }
+        
+  });
+  
+      
+  </script>
+</head>
+<body>
+<div data-role="page" id="qrpage">
+  <div data-role="panel" id="overlayPanel1" data-display="overlay"> 
+    <ul data-role="listview">
+    <li data-icon="camera"><a href="#qrcode1" style= font-size:0.9em;>QR Code</a></li>
+  <li data-icon="user"><a href="#memberid1" style= font-size:0.9em;>Member Id</a></li>
+  <li data-icon="phone"><a href="#mobno1" style= font-size:0.9em;>Mobile No</a></li>
+   <li data-icon="user"><a href="#placeholder2" style= font-size:0.9em;>About Us</a></li>
+  <li data-icon="phone"><a href="#placeholder3" style= font-size:0.9em;>Contact Us</a></li>
+  <li data-icon="gear"><a href="login.html" style= font-size:0.9em;>Logout</a></li>
+</ul>  
+</div> 
+    <div data-role="header">
+   <div data-role="header" data-theme="b">
+         <h3 style="text-align: center" >Welcome To ShopNearn </h3>
+        
+           <a role="button" data-role="button" data-mini="true" href="#overlayPanel1" class="ui-btn-left ui-btn-corner-all ui-btn  ui-icon-bars ui-btn-icon-notext ui-shadow" title="Home" data-form="ui-icon" data-theme="a" > 
+          </a>         
+          <a href="login.html" class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-notext">Logout</a>
+            </div>
+  <div data-role="main" class="ui-content">
+  <div data-role="navbar">
+      <ul>
+        <li><a href="#qrcode1" class="ui-btn-active" data-icon="camera">QR Code</a></li>
+        <li><a href="#memberid1" class="ui-btn-active" data-icon="home">Member Id</a></li>
+
+        <li><a href="#mobno1" class="ui-btn-active" data-icon="phone">Mobile No</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+   </div>
+     <div data-role="page" id="memberid1">
+  <div data-role="panel" id="overlayPanel1" data-display="overlay"> 
+    <ul data-role="listview">
+  <li data-icon="camera"><a href="#qrcode1" style= font-size:0.9em;>QR Code</a></li>
+  <li data-icon="user"><a href="#memberid1" style= font-size:0.9em;>Member Id</a></li>
+  <li data-icon="phone"><a href="#mobno1" style= font-size:0.9em;>Mobile No</a></li>
+   <li data-icon="user"><a href="#placeholder2" style= font-size:0.9em;>About Us</a></li>
+  <li data-icon="phone"><a href="#placeholder3" style= font-size:0.9em;>Contact Us</a></li>
+  <li data-icon="gear"><a href="login.html" style= font-size:0.9em;>Logout</a></li>
+</ul>  
+</div> 
+    <div data-role="header">
+   <div data-role="header" data-theme="b">
+         <h3 style="text-align: center" >Welcome To ShopNearn </h3>
+         
+           <a role="button" data-role="button" data-mini="true" href="#overlayPanel1" class="ui-btn-left ui-btn-corner-all ui-btn  ui-icon-bars ui-btn-icon-notext ui-shadow" title="Home" data-form="ui-icon" data-theme="z" > 
+          </a>
+         <a href="#qrpage" class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Home</a>
+     
+ </div>
+    <div role="main" class="ui-content" data-role="content">
+        <div class="ui-field-contain ui-body ui-br" data-role="fieldcontain">
+     
+            <label for="memberId">Member Id:</label>
+            <input class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-c" id="theName" name="theName" placeholder="Enter your Member Id...." type="text" required>
+        </div>
+        <input tabindex="-1" class="ui-btn-hidden" id="callAjax" value="Submit" type="button">  
+
+</div>
+
+</div>
+   </div>
+   
+   <div data-role="page" id="mobno1">
+  <div data-role="panel" id="overlayPanel1" data-display="overlay"> 
+    <ul data-role="listview">
+   <li data-icon="camera"><a href="#qrcode1" style= font-size:0.9em;>QR Code</a></li>
+  <li data-icon="user"><a href="#memberid1" style= font-size:0.9em;>Member Id</a></li>
+  <li data-icon="phone"><a href="#mobno1" style= font-size:0.9em;>Mobile No</a></li>
+   <li data-icon="user"><a href="#placeholder2" style= font-size:0.9em;>About Us</a></li>
+  <li data-icon="phone"><a href="#placeholder3" style= font-size:0.9em;>Contact Us</a></li>
+  <li data-icon="gear"><a href="login.html" style= font-size:0.9em;>Logout</a></li>
+</ul>  
+</div> 
+    <div data-role="header">
+    <div data-role="header" data-theme="b">
+         <h3 style="text-align: center" >Welcome To ShopNearn </h3>
+         
+           <a role="button" data-role="button" data-mini="true" href="#overlayPanel1" class="ui-btn-left ui-btn-corner-all ui-btn  ui-icon-bars ui-btn-icon-notext ui-shadow" title="Home" data-form="ui-icon" data-theme="z" > 
+          </a>
+         <a href="home.html" class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Home</a>
+     
+ </div>
+     
+        <div class="ui-field-contain ui-body ui-br" data-role="fieldcontain">
+ <label for="mobno">Mobile No:</label>
+            <input class="ui-input-text ui-body-null ui-corner-all ui-shadow-inset ui-body-c" id="theName1" name="theName1" placeholder="Enter Your Mobile No...." type="text" required>
+        
+  </div>
+        <input tabindex="-1" class="ui-btn-hidden" id="callAjax1" value="Submit" type="button">  
+</div>
+   </div>
+   <div data-role="page" id="qrcode1">
+  <div data-role="panel" id="overlayPanel1" data-display="overlay"> 
+    <ul data-role="listview">
+   <li data-icon="camera"><a href="#qrcode1" style= font-size:0.9em;>QR Code</a></li>
+  <li data-icon="user"><a href="#memberid1" style= font-size:0.9em;>Member Id</a></li>
+  <li data-icon="phone"><a href="#mobno1" style= font-size:0.9em;>Mobile No</a></li>
+   <li data-icon="user"><a href="#placeholder2" style= font-size:0.9em;>About Us</a></li>
+  <li data-icon="phone"><a href="#placeholder3" style= font-size:0.9em;>Contact Us</a></li>
+  <li data-icon="gear"><a href="login.html" style= font-size:0.9em;>Logout</a></li>
+</ul>  
+</div> 
+    <div data-role="header">
+    <div data-role="header" data-theme="b">
+         <h3 style="text-align: center" >Welcome To ShopNearn </h3>
+         
+           <a role="button" data-role="button" data-mini="true" href="#overlayPanel1" class="ui-btn-left ui-btn-corner-all ui-btn  ui-icon-bars ui-btn-icon-notext ui-shadow" title="Home" data-form="ui-icon" data-theme="z" > 
+          </a>
+         <a href="#qrpage" class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Home</a>
+     
+ </div>
+     
+ <div data-role="main" class="ui-content"> 
+<form name="contact_form" class="contact_form" method="post" action="client_details2.php" target="client_details2.php" >
+      <label for="qrcode"><a onclick="capturePhoto()" style="width:auto;height:auto">Capture QR Code</a></label>
+     
+    <input type="submit" value="Submit" name="submit"  data-transition="slide" data-theme="b"> 
+    </form>
+
+  </div>
+
+</div>
+   </div>
+   

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="js/jquery.mobile-1.4.5.js"></script>  
+ <script src="jss/jquery-1.4.4.min.js"></script>  
+
+<script type="text/javascript">
+function get()
+{
+var queryString = new Array();
+
+          if (window.location.search.split('?').length > 1) {
+                var params = window.location.search.split('?')[1].split('&');
+                for (var i = 0; i < params.length; i++) {
+                    var key = params[i].split('=')[0];
+                    var value = decodeURIComponent(params[i].split('=')[1]);
+                    queryString[key] = value;
+                }
+            }
+
+var myArray=queryString[key].split('|');
+     document.getElementById('member').value =myArray[0];
+         document.getElementById('code').value =myArray[1];
+         document.getElementById('name').value =myArray[2];
+         document.getElementById('address').value =myArray[3];
+         document.getElementById('mobno').value =myArray[4];
+         document.getElementById('email').value =myArray[5];
+         document.getElementById('sms').value =myArray[6];
+    //window.location.href="bill_details.html?member="+myArray[0];  
+
+  }        
+      function f1()
+{
+//alert('ok');
+var queryString = new Array();
+
+          if (window.location.search.split('?').length > 1) {
+                var params = window.location.search.split('?')[1].split('&');
+                for (var i = 0; i < params.length; i++) {
+                    var key = params[i].split('=')[0];
+                    var value = decodeURIComponent(params[i].split('=')[1]);
+                    queryString[key] = value;
+                }
+            }
+
+var myArray=queryString[key].split('|');
+     document.getElementById('member').value =myArray[0];
+         document.getElementById('code').value =myArray[1];
+         document.getElementById('name').value =myArray[2];
+         document.getElementById('address').value =myArray[3];
+         document.getElementById('mobno').value =myArray[4];
+         document.getElementById('email').value =myArray[5];
+         document.getElementById('sms').value =myArray[6];
+         document.getElementById('t1').value =myArray[7];
+         alert(myArray[7];);
+    window.location.href="bill_details.html?member="+myArray[0]+"|"+myArray[6]+"|"+myArray[7];  
+  }        
+      
+ </script>
+        </head>
+<body onload="get();">
+<div data-role="panel" id="overlayPanel1" data-display="overlay"> 
+    <ul data-role="listview">
+   <li data-icon="camera"><a href="#qrcode1" style= font-size:0.9em;>QR Code</a></li>
+  <li data-icon="user"><a href="#memberid1" style= font-size:0.9em;>Member Id</a></li>
+  <li data-icon="phone"><a href="#mobno1" style= font-size:0.9em;>Mobile No</a></li>
+   <li data-icon="user"><a href="#placeholder2" style= font-size:0.9em;>About Us</a></li>
+  <li data-icon="phone"><a href="#placeholder3" style= font-size:0.9em;>Contact Us</a></li>
+  <li data-icon="gear"><a href="login.html" style= font-size:0.9em;>Logout</a></li>
+</ul>  
+</div> 
+<div data-role="header" data-theme="b">
+         <h3 style="text-align: center" >Welcome To ShopNearn </h3>
+        
+           <a role="button" data-role="button" data-mini="true" href="#overlayPanel1" class="ui-btn-left ui-btn-corner-all ui-btn  ui-icon-bars ui-btn-icon-notext ui-shadow" title="Home" data-form="ui-icon" data-theme="a" > 
+          </a>         
+         <a href="home.html" class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Home</a>
+            </div>
+            <form>
+          <label for="memberId">Member Id:
+   <input type="label" name="member" id="member" readonly> </label>
+    <label for="code">Client Code:
+   <input type="label" name="code" id="code" readonly> </label>
+    <label for="name">Name:
+   <input type="label" name="name" id="name" readonly> </label>
+    <label for="address">Address:
+   <input type="label" name="address" id="address" readonly> </label>
+    <label for="mobno">Mobile No:
+   <input type="label" name="mobno" id="mobno" readonly> </label>
+    <label for="email">Email:
+   <input type="label" name="email" id="email" readonly> </label>
+   <input type="hidden" name="sms" id="sms" readonly> </label>
+      <input type="hidden" name="t1" id="t1" readonly> </label>
+       <button id="submit" onclick="f1();">Next</button>
+      
+</form>
+    </body>
+</html>

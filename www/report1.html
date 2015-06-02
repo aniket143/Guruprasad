@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="js/jquery.mobile-1.4.5.js"></script>  
+ <script src="jss/jquery-1.4.4.min.js"></script>  
+<script type="text/javascript" charset="utf-8">
+
+$(function() {
+      $("#callAjax").click(function() {
+            var member1 = $.trim($("#member1").val());
+            $.ajax({
+    url: "mobile/shop.php",
+       // url: "http://shopnearn.co.in/mobileapp/shop_insert_mob.php",
+           type     : 'POST',
+              data: ({member1:member1,}),
+                  cache: false,
+                  dataType: "text",
+                  success: onSuccess
+                });//}
+                });
+     $("#resultLog").ajaxError(function(event, request, settings, exception) {
+          $("#resultLog").html("Error Calling: " + settings.url + "<br />HTTP Code: " + request.status);});
+function onSuccess(data)
+        {
+        alert(data);
+ $("#resultLog").html("Result: " + data);
+            		window.location.href="report1.html";
+
+        }
+  });
+    
+</script>
+        </head>
+<body>
+
+<div data-role="page" id="pageone">
+  <div data-role="panel" id="overlayPanel1" data-display="overlay"> 
+    <ul data-role="listview">
+   <li data-icon="camera"><a href="#qrcode1" style= font-size:0.9em;>QR Code</a></li>
+  <li data-icon="user"><a href="#memberid1" style= font-size:0.9em;>Member Id</a></li>
+  <li data-icon="phone"><a href="#mobno1" style= font-size:0.9em;>Mobile No</a></li>
+   <li data-icon="user"><a href="#placeholder2" style= font-size:0.9em;>About Us</a></li>
+  <li data-icon="star"><a href="#pageone" style= font-size:0.9em;>Product</a></li>
+  <li data-icon="comment"><a href="#placeholder4" style= font-size:0.9em;>Feedback</a></li>
+  <li data-icon="phone"><a href="#placeholder3" style= font-size:0.9em;>Contact Us</a></li>
+  <li data-icon="gear"><a href="login.html" style= font-size:0.9em;>Logout</a></li>
+</ul>  
+</div> 
+<div data-role="header">
+ 
+   <div data-role="header" data-theme="b">
+         <h3 style="text-align: center" >Welcome To ShopNearn </h3>
+        
+           <a role="button" data-role="button" data-mini="true" href="#overlayPanel1" class="ui-btn-left ui-btn-corner-all ui-btn  ui-icon-bars ui-btn-icon-notext ui-shadow" title="Home" data-form="ui-icon" data-theme="a" > 
+          </a>         
+         <a href="home.html" class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Home</a>
+            </div>
+  </div>
+  <div data-role="main" class="ui-content">
+    <h2>Report</h2>
+    <ul data-role="listview" data-inset="true">
+      <li>Member Id</li>
+      <li></li>
+      <li>Mobile No.</li>
+      <li></li>
+      <li>Bill No.</li>
+      <li></li>
+      <li>Bill Amount</li>
+      <li></li>
+      <li>Commission</li>
+      <li></li>
+      <li>Entry Date</li>
+      <li></li>
+    </ul>
+         <input type="submit"  value="Submit" id="callAjax" name="submit" onclick="checkid()" data-transition="slide" data-theme="b">
+  </div>
+
+  
+
+</div> 
+
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="js/jquery.mobile-1.4.5.js"></script>  
+ <script src="jss/jquery-1.4.4.min.js"></script>  
+<script type="text/javascript"> 
+function checkConnection(e) {
+		if (doesConnectionExist() == true) {
+		alert("connection exists!");
+			redirect();
+		} else {
+			alert("connection doesn't exist!");
+		//	document.getElementById('fname').value="";
+		//	document.getElementById('pwd').value="";
+		window.location.reload();
+		}
+	}
+	
+	function doesConnectionExist() {
+	    var xhr = new XMLHttpRequest();
+//var file = "demo3.php";
+	var file = "http://shopnearn.co.in/mobileapp/demo3.php";
+		var randomNum = Math.round(Math.random() * 10000);
+		
+		xhr.open('HEAD', file + "?rand=" + randomNum, false);
+	    
+	    try {
+	    	xhr.send();
+	    	
+		    if (xhr.status >= 200 && xhr.status < 304) {
+		        return true;
+		    } else {
+		        return false;
+		    }
+	    } catch (e) {
+	    	return false;
+	    }
+	}
+
+  function redirect()
+{
+var shop=document.getElementById('shop').checked;
+var tieup=document.getElementById('tieup').checked;
+var fname=document.getElementById('fname').value;
+var pwd=document.getElementById('pwd').value;
+if(shop==false && tieup==false)
+{
+
+alert("Please Select Option First");
+document.getElementById('fname').value="";
+document.getElementById('pwd').value="";
+}
+else
+{
+if(fname==""&& pwd=="")
+{
+alert("Please enter details properly");
+document.getElementById('fname').value="";
+document.getElementById('pwd').value="";
+}
+else{
+   if(tieup==true)
+    {
+  $(function() {
+  $("#callAjax2").ready(function() {
+            var fname = $.trim($("#fname").val());
+            var pwd = $.trim($("#pwd").val());
+
+          if(fname.length > 0 && pwd.length > 0)
+            { $.ajax({
+    //  url: "login.php",
+       url: "http://shopnearn.co.in/mobileapp/login.php",
+           type     : 'GET',
+             data: ({name: fname,name1:pwd}),
+
+                  cache: false,
+                  dataType: "text",
+                  success: onSuccess
+                });}});
+    $("#resultLog").ajaxError(function(event, request, settings, exception) {
+          $("#resultLog").html("Error Calling: " + settings.url + "<br />HTTP Code: " + request.status);
+        });
+function onSuccess(data)
+        {
+           $("#resultLog").html("Result: " + data);
+          
+           var dd=data.split("|");
+   if(dd[0]==name) 
+       {
+alert("Please enter correct username and password!!!");
+document.getElementById('fname').value="";       
+document.getElementById('pwd').value="";       
+       }
+       else
+       {
+       	window.location.href="home1.html?code="+encodeURIComponent(dd[1]);
+       } }
+  });
+        
+        
+   }
+   else 
+ {
+$(function() {
+      $("#callAjax2").ready(function() {
+     // alert('helllo');
+            var fname = $.trim($("#fname").val());
+            var pwd = $.trim($("#pwd").val());
+
+          if(fname.length > 0 && pwd.length > 0)
+            { $.ajax({
+      // url: "login1.php",
+       url: "http://shopnearn.co.in/mobileapp/login1.php",
+           type     : 'GET',
+             data: ({name: fname,name1:pwd}),
+
+                  cache: false,
+                  dataType: "text",
+                  success: onSuccess
+                });}});
+    $("#resultLog").ajaxError(function(event, request, settings, exception) {
+          $("#resultLog").html("Error Calling: " + settings.url + "<br />HTTP Code: " + request.status);
+        });
+function onSuccess(data)
+        {
+           $("#resultLog").html("Result: " + data);
+           var ss=data.split("|");
+   if(ss[0]==name) 
+       {
+       	alert("Please enter correct username and password!!!");
+document.getElementById('fname').value="";       
+document.getElementById('pwd').value="";       
+
+       }
+       else
+       {
+     
+       window.location.href="home.html?code="+encodeURIComponent(ss[1]);
+       } }
+  });
+        }
+}
+}
+}
+ /*function onPhotoDataSuccess(imageData) {
+  // Uncomment to view the base64 encoded image data
+  // console.log(imageData);
+
+  // Get image handle
+  
+  var smallImage = document.getElementById('smallImage');
+
+  // Unhide image elements
+  //
+  smallImage.style.display = 'block';
+
+  // Show the captured photo
+  // The inline CSS rules are used to resize the image
+  //
+  smallImage.src = "data:image/jpeg;base64," + imageData;
+}
+
+function onFail(message) {
+  alert('Failed because: ' + message);
+}
+function capturePhoto() {
+ alert('hello');
+  // Take picture using device camera and retrieve image as base64-encoded string
+  navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+    destinationType: destinationType.DATA_URL });
+}
+*/
+</script>
+</head>
+<body>
+<!--.... ......First Page........ -->
+<div data-role="page" id="page">
+<div data-role="main" class="ui-content">
+  <img src="logo.png"  style="width:50%;height:50%;"> </img>
+ <div data-role="main" class="ui-content">
+<form method="post">
+<!--         <fieldset data-role="controlgroup"> -->
+      <legend>Choose your Type:</legend>
+        <label for="shop">Shop</label>
+        <input type="radio" name="type" id="shop" value="shop">
+        <label for="tieup">Tieup</label>
+        <input type="radio" name="type" id="tieup" value="tieup">	
+<!--       </fieldset> -->
+      <label for="fname">Username:</label>
+      <input type="text" name="fname" id="fname" required>
+      <label for="lname">Password:</label>
+      <input type="password" name="pwd" id="pwd" required> 
+  <button id="callAjax2"  value="Submit" type="button" onclick="checkConnection();" >Submit </button>  
+</form>
+</div>
+     
+<!--       </form> -->
+<!--      <form name="contact_form" class="contact_form" method="post" action="guruprasad/admin/member_reg_new.php" target="member_reg_new" > --> 
+    <!-- <form name="contact_form" class="contact_form" method="post" action="#member_reg_new" target="member_reg_new" >
+   <input type="submit" value="Client Registration" name="submit"  data-transition="slide" data-theme="a"> 
+    </form>  --> 
+    
+  </div>
+    </div> 
+    <!--.... ......End of First Page........ -->
+    
+    <!--......client Registration Form........-->
+<div data-role="page" id="member_reg_new">
+<div data-role="panel" id="overlayPanel1" data-display="overlay"> 
+    <ul data-role="listview">
+   <li data-icon="user"><a href="#placeholder2" style= font-size:0.9em;>About Us</a></li>
+  <li data-icon="recycle"><a href="#" style= font-size:0.9em;>Services</a></li>
+  <li data-icon="star"><a href="#pageone" style= font-size:0.9em;>Product</a></li>
+  <li data-icon="comment"><a href="#placeholder4" style= font-size:0.9em;>Feedback</a></li>
+  <li data-icon="phone"><a href="#placeholder3" style= font-size:0.9em;>Contact Us</a></li>
+  <li data-icon="info"><a href="#" style= font-size:0.9em;>News</a></li>
+  <li data-icon="gear"><a href="#" style= font-size:0.9em;>Setting</a></li>
+</ul>  
+</div> 
+<div data-role="header">
+ 
+   <div data-role="header" data-theme="b">
+    <h1>Bill Details</h1>
+  </div>
+  <a role="button" data-role="button" data-mini="true" href="#overlayPanel1" class="ui-btn-left ui-btn-corner-all ui-btn  ui-icon-bars ui-btn-icon-notext ui-shadow" title=" Home " data-form="ui-icon" data-theme="z" > 
+          </a>
+<a href="#page" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-left"></a>
+  </div>
+    <div data-role="main" class="ui-content">
+
+<form name="contact_form" class="contact_form" method="post" action="execute3.php?action=member" target="execute3.php" >
+<div class="ui-field-contain">
+      <label for="sponsorId">Sponsor ID:</label>
+      <input type="text" name="sponsorId" id="sponsorId" required>
+      </div>
+      <div class="ui-field-contain">
+
+      <label for="title">Title:</label>
+         <fieldset  data-role="controlgroup" data-type="horizontal"> 
+     <select name="title" id="title" required>
+    <option value="Mr." selected="">Mr.</option><option value="Mrs">Mrs</option><option value="Ms.">Ms.</option><option value="Dr.">Dr.</option>
+                  </select>
+                  </fieldset> 
+      <label for="applicateName">Applicant Name:</label>
+      <input type="text" name="applicateName" id="applicateName" onkeypress="return lettersOnly(event)" required>
+            </div>
+ <div class="ui-field-contain"> 
+ <label for="nameTitle">Father/Husband's Name:</label>
+   <fieldset  data-role="controlgroup" data-type="horizontal"> 
+ <select name="nameTitle" id="nameTitle" required>
+                <option value="S/O" selected="">S/O</option><option value="W/O">W/O</option><option value="D/O">D/O</option>
+            </select>          </fieldset> 
+ <input id="fatherName" type="text" onkeypress="return lettersOnly(event)"  name="fatherName" >
+   </div> 
+   <div class="ui-field-contain">
+      <label for="day">Date Of Birth:</label>
+       <input type="date" name="date" id="date" required>
+       </div>
+               <div class="ui-field-contain">
+      <label for="panNo">Pan No:</label>
+      <input type="text" name="panNo" id="panNo" maxlength="10" required>
+      </div>
+         <div class="ui-field-contain">
+      <label for="cardid">Card ID:</label>
+      <input type="text" name="cardid" id="cardid" maxlength="16" required>
+      </div>
+         <div class="ui-field-contain">
+      <label for="address">Address:</label>
+      <textarea name="address" id="address"  required></textarea>
+      </div>
+         <div class="ui-field-contain">
+      <label for="city_town">City/Town :</label>
+      <input type="text" name="city_town" id="city_town" onkeypress="return lettersOnly(event)" required>
+      </div>
+         <div class="ui-field-contain">
+      <label for="district">District :</label>
+      <input type="text" name="district" id="district" onkeypress="return lettersOnly(event)" required>
+      </div>
+         <div class="ui-field-contain">
+      <label for="state">State:</label>
+    <select name="state" id="state" required >
+      <option value="" selected="">--------Select State--------</option><option value="Andaman And Nicobar">Andaman And Nicobar</option>
+				 <option value="Andhra Pradesh">Andhra Pradesh</option><option value="Arunachal Pradesh">Arunachal Pradesh</option><option value="Assam">Assam</option>
+				 <option value="Bihar">Bihar</option><option value="Chandigarh">Chandigarh</option><option value="Chattisgarh">Chattisgarh</option>
+				 <option value="Dadar Nagar Haweli">Dadar Nagar Haweli</option><option value="Daman And Diu">Daman And Diu</option><option value="Delhi">Delhi</option>
+				 <option value="Goa">Goa</option><option value="Gujarat">Gujarat</option><option value="Haryana">Haryana</option>
+				 <option value="Himanchal Pradesh">Himanchal Pradesh</option><option value="Jammu And Kashmir">Jammu And Kashmir</option>
+				 <option value="Jharkhand">Jharkhand</option><option value="Karnataka">Karnataka</option><option value="Kerala">Kerala</option>
+				 <option value="Lakshadweep">Lakshadweep</option><option value="Madhya Pradesh">Madhya Pradesh</option><option value="Maharastra">Maharastra</option>
+				 <option value="Manipur">Manipur</option><option value="Meghalaya">Meghalaya</option><option value="Mizoram">Mizoram</option><option value="Nagaland">Nagaland</option><option value="Orissa">Orissa</option><option value="Pondicherry">Pondicherry</option><option value="Punjab">Punjab</option><option value="Rajasthan">Rajasthan</option><option value="Sikkim">Sikkim</option><option value="Tamilnadu">Tamilnadu</option><option value="Telangana">Telangana</option><option value="Tripura">Tripura</option>
+				 <option value="Uttar Pradesh">Uttar Pradesh</option><option value="Uttaranchal">Uttaranchal</option><option value="West Bengal">West Bengal</option>
+            </select>
+            </div>
+         <div class="ui-field-contain">
+      <label for="pincode">PinCode :</label>
+      <input id="pincode" type="text" maxlength="6" onkeypress="if(event.keyCode!=9) return numbersonly(this, event);"   name="pincode" required>
+</div>
+         <div class="ui-field-contain"> 
+ <label for="phoneno">Primary Phone No(with code) :</label>
+  <input id="phoneno" type="text" onkeypress="if(event.keyCode!=9) return numbersonly(this, event);"  name="phoneno" >
+</div>
+         <div class="ui-field-contain">  
+  <label for="mobileNo">Mobile No:</label>
+  <input id="mobileNo" type="text" maxlength="10" name="mobileNo" onblur="phonenumber(this.value)"  onkeypress="if(event.keyCode!=9) return numbersonly(this, event);"  required>
+</div>
+         <div class="ui-field-contain"> 
+ <label for="email"> Email:</label>
+ <input id="email" type="text" name="email"  onblur="email_add(this.value);"  required>
+</div>
+         <div class="ui-field-contain">      
+      <label for="nomineeName">Name :</label>
+   <input  id="nomineeName" type="text" name="nomineeName" onkeypress="return lettersOnly(event)" >
+</div>
+         <div class="ui-field-contain">    
+    <label for="relation">Relation :</label>
+   <input  id="relation" type="text" name="relation" onkeypress="return lettersOnly(event)" >
+</div>
+         <div class="ui-field-contain">     
+     <label for="payableName">Payable Name :</label>
+   <input  id="payableName" type="text" name="payableName" onkeypress="return lettersOnly(event)"  >
+</div>
+         <div class="ui-field-contain">    
+    <label for="bankName">Bank Name:</label>
+
+            <select name="bankName" id="bankName">
+                <option value="" selected="">--------Select Bank Name--------</option><option value="ABHYUDAYA CO-OP BANK LTD">ABHYUDAYA CO-OP BANK LTD</option>
+				<option value="ABN AMRO BANK">ABN AMRO BANK</option><option value="ABU DHABI COMMERCIAL BANK">ABU DHABI COMMERCIAL BANK</option>
+				<option value="AHMEDABAD MERCANTILE CO-OPERATIVE BANK LTD.">AHMEDABAD MERCANTILE CO-OPERATIVE BANK LTD.</option>
+				<option value="ALLAHABAD BANK">ALLAHABAD BANK</option><option value="ANDHRA BANK">ANDHRA BANK</option><option value="AXIS BANK">AXIS BANK</option>
+				<option value="AXIS BANK LTD">AXIS BANK LTD</option><option value="BANK OF AMERICA">BANK OF AMERICA</option>
+				<option value="BANK OF BAHARAIN AND KUWAIT BSC">BANK OF BAHARAIN AND KUWAIT BSC</option><option value="BANK OF BARODA">BANK OF BARODA</option>
+				<option value="BANK OF CEYLON">BANK OF CEYLON</option><option value="BANK OF INDIA">BANK OF INDIA</option>
+				<option value="BANK OF MAHARASHTRA">BANK OF MAHARASHTRA</option><option value="BANK OF RAJASTHAN LTD">BANK OF RAJASTHAN LTD</option
+				><option value="BARCLAYS BANK PLC">BARCLAYS BANK PLC</option><option value="BNP PARIBAS">BNP PARIBAS</option>
+				<option value="CALYON BANK">CALYON BANK</option><option value="CANARA BANK">CANARA BANK</option>
+				<option value="CATHOLIC SYRIAN BANK LTD">CATHOLIC SYRIAN BANK LTD</option><option value="CENTRAL BANK OF INDIA">CENTRAL BANK OF INDIA</option>
+				<option value="CHINATRUST COMMERCIAL BANK LTD">CHINATRUST COMMERCIAL BANK LTD</option><option value="CHO HUNG BANK">CHO HUNG BANK</option>
+				<option value="CITI BANK N.A">CITI BANK N.A</option><option value="CITIZEN CREDIT CO-OPERATIVE BANK LTD">CITIZEN CREDIT CO-OPERATIVE BANK LTD</option>
+				<option value="CITY UNION BANK LTD">CITY UNION BANK LTD</option><option value="CORPORATION BANK">CORPORATION BANK</option>
+				<option value="DBS BANK LTD">DBS BANK LTD</option><option value="DELHI CO-OPERATIVE BANK LTD">DELHI CO-OPERATIVE BANK LTD</option>
+				<option value="DENA BANK">DENA BANK</option><option value="DEPOSIT INS AND CR GUAR CORPN">DEPOSIT INS AND CR GUAR CORPN</option>
+				<option value="DEVELOPMENT CREDIT BANK LIMITED">DEVELOPMENT CREDIT BANK LIMITED</option>
+				<option value="DOMBIVLI NAGARI SAHAKARI BANK LIMITED">DOMBIVLI NAGARI SAHAKARI BANK LIMITED</option><option value="FEDERAL BANK LTD">FEDERAL BANK LTD</option><option value="HDFC BANK">HDFC BANK</option><option value="ICICI BANK">ICICI BANK</option><option value="IDBI BANK LTD">IDBI BANK LTD</option><option value="INDIAN BANK">INDIAN BANK</option><option value="INDIAN OVERSEAS BANK">INDIAN OVERSEAS BANK</option><option value="INDUSIND BANK LTD">INDUSIND BANK LTD</option><option value="ING VYSYA BANK LTD">ING VYSYA BANK LTD</option><option value="JANAKALYAN SAHAKARI BANK LTD">JANAKALYAN SAHAKARI BANK LTD</option><option value="JP MORGAN CHASE BANK, N.A.">JP MORGAN CHASE BANK, N.A.</option><option value="KALYAN JANATA SAH BANK LTD">KALYAN JANATA SAH BANK LTD</option><option value="KAPOL CO-OP BANK LTD">KAPOL CO-OP BANK LTD</option><option value="KARNATAKA BANK LTD">KARNATAKA BANK LTD</option><option value="KARUR VYSYA BANK">KARUR VYSYA BANK</option><option value="KOTAK MAHINDRA BANK">KOTAK MAHINDRA BANK</option><option value="KRUNG THAI BANK PCL">KRUNG THAI BANK PCL</option><option value="LAKSHMI VILAS BANK">LAKSHMI VILAS BANK</option><option value="LORD KRISHNA BANK">LORD KRISHNA BANK</option><option value="MAHARASHTRA STATE CO-OP BANK LTD">MAHARASHTRA STATE CO-OP BANK LTD</option><option value="MANDVI CO-OP BANK LTD">MANDVI CO-OP BANK LTD</option><option value="MASHREQBANK PSC">MASHREQBANK PSC</option><option value="MIZUHO CORPORATE BANK LTD">MIZUHO CORPORATE BANK LTD</option><option value="NEW INDIA CO-OP BANK LTD">NEW INDIA CO-OP BANK LTD</option><option value="NUTAN NAGARIK SAHAKARI BANK LTD">NUTAN NAGARIK SAHAKARI BANK LTD</option><option value="OMAN INTERNATIONAL BANK">OMAN INTERNATIONAL BANK</option><option value="ORIENTAL BANK OF COMMERCE">ORIENTAL BANK OF COMMERCE</option><option value="PARSIK JANATA SAHAKARI BANK LTD">PARSIK JANATA SAHAKARI BANK LTD</option>
+				<option value="PUNJAB AND MAHARASHTRA CO-OP BANK LTD">PUNJAB AND MAHARASHTRA CO-OP BANK LTD</option><option value="PUNJAB AND SIND BANK">PUNJAB AND SIND BANK</option><option value="PUNJAB NATIONAL BANK">PUNJAB NATIONAL BANK</option><option value="RAJKOT NAGRIK SAHAKARI BANK LTD">RAJKOT NAGRIK SAHAKARI BANK LTD</option><option value="RESERVE BANK OF INDIA">RESERVE BANK OF INDIA</option><option value="SHINHAN BANK">SHINHAN BANK</option><option value="SOCIETE GENERALE">SOCIETE GENERALE</option><option value="SOUTH INDIAN BANK LTD">SOUTH INDIAN BANK LTD</option><option value="STANDARD CHARTERED BANK">STANDARD CHARTERED BANK</option><option value="STATE BANK OF BIKANER AND JAIPUR">STATE BANK OF BIKANER AND JAIPUR</option><option value="STATE BANK OF HYDERABAD">STATE BANK OF HYDERABAD</option><option value="STATE BANK OF INDIA">STATE BANK OF INDIA</option><option value="STATE BANK OF INDORE">STATE BANK OF INDORE</option><option value="STATE BANK OF MAURITUS">STATE BANK OF MAURITUS</option><option value="STATE BANK OF MYSORE">STATE BANK OF MYSORE</option><option value="STATE BANK OF PATIALA">STATE BANK OF PATIALA</option><option value="STATE BANK OF TRAVANCORE">STATE BANK OF TRAVANCORE</option><option value="SYNDICATE BANK">SYNDICATE BANK</option><option value="TAMILNAD MERCANTILE BANK LTD">TAMILNAD MERCANTILE BANK LTD</option><option value="THANE BHARAT SAHAKARI BANK LTD">THANE BHARAT SAHAKARI BANK LTD</option><option value="THANE JANATA SAHKARI BANK LTD">THANE JANATA SAHKARI BANK LTD</option><option value="THE BANK OF NOVA SCOTIA">THE BANK OF NOVA SCOTIA</option><option value="THE BANK OF RAJASTHAN LTD">THE BANK OF RAJASTHAN LTD</option><option value="THE BANK OF TOKYO MITSUBISHI LTD">THE BANK OF TOKYO MITSUBISHI LTD</option><option value="THE BHARAT CO-OPERATIVE BANK LTD">THE BHARAT CO-OPERATIVE BANK LTD</option><option value="THE COSMOS CO-OPERATIVE BANK LTD">THE COSMOS CO-OPERATIVE BANK LTD</option><option value="THE DHANALAKSHMI BANK LTD">THE DHANALAKSHMI BANK LTD</option><option value="THE FEDERAL BANK LTD">THE FEDERAL BANK LTD</option><option value="THE GREATER BOMBAY CO-OP BANK LTD">THE GREATER BOMBAY CO-OP BANK LTD</option><option value="THE JAMMU AND KASHMIR BANK LTD">THE JAMMU AND KASHMIR BANK LTD</option><option value="THE KALUPUR COMM COOP.BANK LTD">THE KALUPUR COMM COOP.BANK LTD</option><option value="THE NANITAL CO-OPERATION BANK LTD">THE NANITAL CO-OPERATION BANK LTD</option><option value="THE NORTH KANARA G.S.B. CO-OP. BANK LTD">THE NORTH KANARA G.S.B. CO-OP. BANK LTD</option>
+				<option value="THE RATNAKAR BANK LTD">THE RATNAKAR BANK LTD</option><option value="THE SANGLI BANK LTD">THE SANGLI BANK LTD</option>
+				<option value="THE SARASWAT CO-OPERATIVE BANK LTD">THE SARASWAT CO-OPERATIVE BANK LTD</option><option value="THE SHAMRAO VITHAL CO -OPERATIVE BANK LTD">THE SHAMRAO VITHAL CO -OPERATIVE BANK LTD</option>
+				<option value="THE TAMIL NADU STATE APEX CO-OPERATIVE BANK LTD">THE TAMIL NADU STATE APEX CO-OPERATIVE BANK LTD</option>
+				<option value="UCO BANK">UCO BANK</option><option value="UNION BANK OF INDIA">UNION BANK OF INDIA</option><option value="VIJAYA BANK">VIJAYA BANK</option>
+				<option value="WEST BENGAL STATE CO-OP BANK LTD">WEST BENGAL STATE CO-OP BANK LTD</option><option value="YES BANK LTD">YES BANK LTD</option>
+            </select>
+</div>
+         <div class="ui-field-contain">           
+            <label for="branch"> Branch :</label>
+  <input id="branch" type="text" name="branch" onkeypress="return lettersOnly(event)" >
+</div>
+         <div class="ui-field-contain">      
+      <label for="city"> City :</label>
+  <input  id="city" type="text" name="city" onkeypress="return lettersOnly(event)" >
+</div>
+         <div class="ui-field-contain">     
+     <label for="accountNo"> Account No:</label>
+  <input  id="accountNo" type="text" name="accountNo" onkeypress="if(event.keyCode!=9) return numbersonly(this, event);">
+</div>
+         <div class="ui-field-contain"> 	
+ 	<label for="accountType">Account type:</label>
+        <select name="accountType" id="accountType" class="form-control">
+                <option value="" selected="">--Select Account Type--</option><option value="Saving A/C">Saving A/C</option>
+				<option value="Current A/C">Current A/C</option>
+				<option value="OD A/C">OD A/C</option><option value="CC A/C">CC A/C</option>
+            </select>
+</div>
+         <div class="ui-field-contain">     
+     <label for="ifscCode"> IFSC Code No :</label>
+  <input  id="ifscCode" type="text" name="ifscCode"  maxlength="11" >
+</div>
+         <div class="ui-field-contain">       
+        <label for="password">Password :</label>
+
+        <input  id="password" type="password" name="password" maxlength="4" required>
+     </div>
+         <div class="ui-field-contain">
+      <label for="confirm_password"> Confirm Password :</label>
+
+        <input id="confirm_password" type="password" onkeyup="checkPass(); return false;" name="confirm_password" maxlength="4" required>
+</div>
+         <div class="ui-field-contain">
+       <label><input type="checkbox" value="A" required>&nbsp;I agree the company's <a href="#" style="underline:block">terms and conditions</a></label>
+</div>    
+     <input type="submit"  value="Submit" name="submit"  data-transition="slide" data-theme="b">
+    </form>
+</div>
+</div>
+    <!--......client Registration Form End........-->
+</body>
+</html>
